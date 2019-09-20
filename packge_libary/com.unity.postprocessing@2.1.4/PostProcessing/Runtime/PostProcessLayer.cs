@@ -1024,10 +1024,6 @@ namespace UnityEngine.Rendering.PostProcessing
                     uberSheet.properties.SetFloat(ShaderIDs.LumaInAlpha, 1f);
             }
 
-            // Motion blur is a separate pass - could potentially be done after DoF depending on the
-            // kind of results you're looking for...
-            int motionBlurTarget = RenderEffect<MotionBlur>(context, true);
-
             // Prepare exposure histogram if needed
             if (ShouldGenerateLogHistogram(context))
                 m_LogHistogram.Generate(context);
@@ -1067,7 +1063,6 @@ namespace UnityEngine.Rendering.PostProcessing
             context.destination = finalDestination;
 
             if (releaseTargetAfterUse > -1) cmd.ReleaseTemporaryRT(releaseTargetAfterUse);
-            if (motionBlurTarget > -1) cmd.ReleaseTemporaryRT(motionBlurTarget);
             if (context.bloomBufferNameID > -1) cmd.ReleaseTemporaryRT(context.bloomBufferNameID);
 
             cmd.EndSample("BuiltinStack");
